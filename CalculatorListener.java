@@ -17,13 +17,53 @@ public interface CalculatorListener extends ParseTreeListener {
 	 */
 	void exitExpression(CalculatorParser.ExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CalculatorParser#integralExpression}.
+	 * Enter a parse tree produced by {@link CalculatorParser#addExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterIntegralExpression(CalculatorParser.IntegralExpressionContext ctx);
+	void enterAddExpression(CalculatorParser.AddExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CalculatorParser#integralExpression}.
+	 * Exit a parse tree produced by {@link CalculatorParser#addExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitIntegralExpression(CalculatorParser.IntegralExpressionContext ctx);
+	void exitAddExpression(CalculatorParser.AddExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalculatorParser#multiplyExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplyExpression(CalculatorParser.MultiplyExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalculatorParser#multiplyExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplyExpression(CalculatorParser.MultiplyExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalculatorParser#powerExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPowerExpression(CalculatorParser.PowerExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalculatorParser#powerExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPowerExpression(CalculatorParser.PowerExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalculatorParser#sqrtExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSqrtExpression(CalculatorParser.SqrtExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalculatorParser#sqrtExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSqrtExpression(CalculatorParser.SqrtExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CalculatorParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtom(CalculatorParser.AtomContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CalculatorParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtom(CalculatorParser.AtomContext ctx);
 }
