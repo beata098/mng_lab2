@@ -16,22 +16,19 @@ public class CalculatorMainListener extends CalculatorBaseListener {
         }
 
         System.out.println("exitExpression:" + ctx.getText());
-
-
         double result = numbers.removeFirst();
         for (int i = 1; i < ctx.getChildCount(); i += 2) {
             String operator = ctx.getChild(i).getText();
-            double right = numbers.removeFirst();
-
+            double argument = numbers.removeFirst();
             switch (operator) {
                 case "+":
-                    result += right;
+                    result = result + argument;
                     break;
                 case "-":
-                    result -= right;
+                    result = result - argument;
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid operator: " + operator);
+                    throw new IllegalArgumentException("Niewlasciwy argument: " + operator);
             }
         }
 
@@ -49,22 +46,21 @@ public class CalculatorMainListener extends CalculatorBaseListener {
         System.out.println("exitMultiplyExpression:" + ctx.getText());
 
         double result = numbers.removeLast();
-        int childCount = ctx.getChildCount();
-        for (int i = childCount - 2; i >= 0; i -= 2) {
-            double operand = numbers.removeLast();
+        for (int i = 1; i < ctx.getChildCount(); i += 2) {
             String operator = ctx.getChild(i).getText();
+            double argument = numbers.removeLast();
             switch (operator) {
                 case "*":
-                    result = operand * result;
+                    result = argument * result;
                     break;
                 case "/":
                     if (result == 0) {
-                        throw new ArithmeticException("Division by zero");
+                        throw new ArithmeticException("Nie wolno dzielic przez 0");
                     }
-                    result = operand / result;
+                    result = argument / result;
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid operator: " + operator);
+                    throw new IllegalArgumentException("Niewlasciwy argument: " + operator);
             }
         }
 
@@ -113,28 +109,39 @@ public class CalculatorMainListener extends CalculatorBaseListener {
         }
         //super.visitTerminal(node);
     }
+    @Override
+    public void exitAtom(CalculatorParser.AtomContext ctx) {
+        if (ctx.getChildCount() == 1) {
+            return;
+        }
+        System.out.println("exitAtom:" + ctx.getText());
+        if (ctx.MINUS() != null) {
+            numbers.addLast(-numbers.removeLast());
+        }
+        super.exitAtom(ctx);
+    }
 
     public double getResult() {
+        
         return numbers.removeLast();
     }
 
 
     public static void main(String[] args) throws Exception {
-        //Double result = calc("(99 / 3) * 3 + 1");
-        //Double result = calc("20 + 5 * 2.2 - 10 / 2.5 + 5.05");
-        Double result = calc("99 / 3 / 3");
-        Double result1 = calc("1 -  25 * 4 ");
-        Double result2 = calc("(4 ^ 4) ^ (1 / 4)");
-        Double result3 = calc("sqrt(10*10+21)+sqrt(4)*sqrt(100)");
+        Double result = calc("20 + 5 * 2.2 - 10 / 2.5 + 5.05");
+        Double result1 = calc("(2 ^ 3) ^ (1 / 3)");
+        Double result2 = calc("- 1 - 25 / 5");
+        Double result3 = calc("sqrt(10*10+21)+sqrt(4)*sqrt100");
         Double result4 = calc("(2 ^ 2 + 2 - sqrt4 )/ 2");
         System.out.println("Result = " + result);
-        System.out.println("Result = " + result1);
-        System.out.println("Result = " + result2);
-        System.out.println("Result = " + result3);
-        System.out.println("Result = " + result4);
+        System.out.println("Result1 = " + result1);
+        System.out.println("Result2 = " + result2);
+        System.out.println("Result3 = " + result3);
+        System.out.println("Result4 = " + result4);
     }
 
     public static Double calc(String expression) {
+
         return calc(CharStreams.fromString(expression));
     }
 
